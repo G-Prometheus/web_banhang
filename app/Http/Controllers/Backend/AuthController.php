@@ -24,7 +24,14 @@ class AuthController extends Controller
         }
         return redirect()->route('auth.admin')->with('error', 'Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập của bạn');
     }
+    public function logout(Request $request){
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('auth.admin')->with('success', 'Đăng xuất thành công');
+    }
     public function index(){
+
         return view('backend.auth.login');
     }
 }
