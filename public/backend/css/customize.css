@@ -4,3 +4,13 @@
     margin-top: 5px;
     font-style: italic;
 }
+.mt20{
+    margin-top: 20px;
+}
+.mb20{
+    margin-bottom: 20px;
+}
+h5{
+    text-transform: uppercase;
+    font-weight: normal;
+}
