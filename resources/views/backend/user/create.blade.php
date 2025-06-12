@@ -1,0 +1,1 @@
+@include('backend.dashboard.component.breadcumb',['title' => $config['seo']['create']['title']])
