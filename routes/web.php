@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Ajax\LocationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\AuthController;
 use App\Http\Controllers\Backend\DashboardController;
@@ -18,6 +19,8 @@ Route::group(['prefix' => 'user'], function () {
     // Route::post('update/{id}', [UserController::class, 'update'])->name('user.update')->middleware('admin');
     // Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete')->middleware('admin');
 });
+/* AJAX */
+Route::get('ajax/location/getLocation', [LocationController::class, 'getLocation'])->name('ajax.location.index')->middleware('admin');
 
 Route::get('admin', [AuthController::class, 'index'])->name('auth.admin')->middleware('login');
 Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard.index') ->middleware('admin');
