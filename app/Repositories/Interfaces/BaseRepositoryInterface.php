@@ -6,4 +6,5 @@ interface BaseRepositoryInterface
 {
 
     public function getAll();
+    public function findById(int $id);
 }

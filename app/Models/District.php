@@ -13,5 +13,10 @@ class District extends Model
         'name',
     ];
     protected $table = 'districts';
-    
+    protected $primaryKey = 'code';
+    public $incrementing = false;
+    public function province()
+    {
+        return $this->belongsTo(Province::class, 'province_code', 'code');
+    }
 }
