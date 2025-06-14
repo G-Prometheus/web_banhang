@@ -90,7 +90,7 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Thành phố </label>
-                                    <select name="province_id" id="" class="form-control select2 province">
+                                    <select name="province_id" id="" class="form-control select2 province location" data-target="districts">
                                         <option value="0">[Chọn Thành Phố]</option>
                                         @if (@isset($provinces))
                                             @foreach ($provinces as $province)
@@ -103,7 +103,7 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Quận/Huyện</label>
-                                    <select name="district_id   " id="" class="form-control districts">
+                                    <select name="district_id   " id="" class="form-control districts select2" data-target="wards">
                                         <option value="0">[Chọn quận/Huyện]</option>
                                     </select>
                                 </div>

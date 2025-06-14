@@ -4,7 +4,7 @@ namespace App\Http\Ajax;
 
 use App\Http\Controllers\Controller;
 use App\Models\District;
-use App\Repositories\Interfaces\DistrictRepositoryInterface as DistrictRepository;
+use App\Repositories\DistrictRepository;
 use App\Repositories\ProvinceRepository;
 use Illuminate\Http\Request;
 
@@ -17,18 +17,23 @@ class LocationController extends Controller
         $this->provinceRepository = $provinceRepository;
     }
     public function getLocation(Request $request){
-        //lay ra id cua tinh thanh
-        $provinces_id = $request->input('province_id'); 
-        //lay ra danh sach quan huyen theo id tinh thanh
-        $province = $this->provinceRepository->findById($provinces_id, ['code', 'name'], ['districts']);
+        $get = $request->input(); 
+        $html = '';
+        if($get['target'] == 'districts'){
+            $province = $this->provinceRepository->findById($get['data']['location_id'], ['code', 'name'], ['districts']);
+            $html = $this->renderHtml($province->districts);
+        }else if($get['target'] == 'wards'){
+            $district = $this->districtRepository->findById($get['data']['location_id'], ['code', 'name'], ['wards']);
+            $html = $this->renderHtml($district->wards, 'Chọn Phường/Xã');
+        }
         $response = [
-            'html' => $this->renderHtml($province->districts),
+            'html' => $html,
         ];
         return response()->json($response);
     }
-    public function renderHtml($districts)
+    public function renderHtml($districts, $root = 'Chọn quận huyện')
     {
-        $html = '<option value="0">-- Chọn quận huyện --</option>';
+        $html = '<option value="0">-- '.$root.' --</option>';
         foreach ($districts as $district) {
             $html .= '<option value="'.$district->code.'">'.$district->name.'</option>';
         }
