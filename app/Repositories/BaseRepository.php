@@ -20,5 +20,10 @@ class BaseRepository implements BaseRepositoryInterface
     {
         return $this->model->select($columns)->with($relations)->findOrFail($modelId, $columns);
     }
+    public function create(array $payload = [])
+    {
+        return $this->model->create($payload);
+        return $model->fresh();
+    }
 
 }

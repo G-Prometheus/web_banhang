@@ -6,5 +6,5 @@ interface DistrictRepositoryInterface
 {
 
     public function getAll();
-    public function findDistrictByProvinceId(int $province_Id);
+    //public function findDistrictByProvinceId(int $province_Id);
 }

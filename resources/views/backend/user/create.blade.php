@@ -1,7 +1,16 @@
 @include('backend.dashboard.component.breadcumb',['title' => $config['seo']['create']['title']])
-
-<form action="" method="" class="box">
-    <div class="wrapper wrapper-content animated fadeInRight" >
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
+<form action="{{ route('user.store') }}" method="post" class="box">
+    @csrf
+    <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
             <div class="col-lg-5">
                 <div class="panel-head">
@@ -18,21 +27,26 @@
                         <div class="row mb10">
                             <div class="col-lg-6">
                                 <div class="form-row">
-                                    <label for="" class="control-label text-right">Email <span class="text-danger">(*)</span></label>
-                                    <input type="text" name="email" class="form-control"  value="{{ old('email') }}" autocomplete="off">
+                                    <label for="" class="control-label text-right">Email <span
+                                            class="text-danger">(*)</span></label>
+                                    <input type="text" name="email" class="form-control" value="{{ old('email') }}"
+                                        autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
-                                    <label for="" class="control-label text-right">Họ tên <span class="text-danger">(*)</span></label>
-                                    <input type="text" name="name" class="form-control"  value="" autocomplete="off">
+                                    <label for="" class="control-label text-right">Họ tên <span
+                                            class="text-danger">(*)</span></label>
+                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}"
+                                        autocomplete="off">
                                 </div>
                             </div>
                         </div>
                         <div class="row mb10">
                             <div class="col-lg-6">
                                 <div class="form-row">
-                                    <label for="" class="control-label text-right">Nhóm thành viên <span class="text-danger">(*)</span></label>
+                                    <label for="" class="control-label text-right">Nhóm thành viên <span
+                                            class="text-danger">(*)</span></label>
                                     <select name="user_catalogue_id" id="" class="form-control">
                                         <option value="0">[Chọn nhóm thành viên]</option>
                                     </select>
@@ -41,21 +55,26 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ngày sinh </label>
-                                    <input type="text" name="name" class="form-control"  value="" autocomplete="off">
+                                    <input type="date" name="birthday" class="form-control"
+                                        value="{{ old('birthday') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
                         <div class="row mb10">
                             <div class="col-lg-6">
                                 <div class="form-row">
-                                    <label for="" class="control-label text-right">Mật khẩu<span class="text-danger">(*)</span></label>
-                                    <input type="password" name="password" class="form-control"  value="" autocomplete="off">
+                                    <label for="" class="control-label text-right">Mật khẩu<span
+                                            class="text-danger">(*)</span></label>
+                                    <input type="password" name="password" class="form-control"
+                                        value="{{ old('password') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
-                                    <label for="" class="control-label text-right">Nhập lại mật khẩu<span class="text-danger">(*)</span></label>
-                                    <input type="password" name="re_password" class="form-control"  value="" autocomplete="off">
+                                    <label for="" class="control-label text-right">Nhập lại mật khẩu<span
+                                            class="text-danger">(*)</span></label>
+                                    <input type="password" name="re_password" class="form-control"
+                                        value="{{ old('re_password') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -63,7 +82,8 @@
                             <div class="col-lg-12">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ảnh đại diện</label>
-                                    <input type="password" name="image" class="form-control"  value="" autocomplete="off">
+                                    <input type="password" name="image" class="form-control" value="{{ old('image') }}"
+                                        autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -90,12 +110,14 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Thành phố </label>
-                                    <select name="province_id" id="" class="form-control select2 province location" data-target="districts">
+                                    <select name="province_id" id="" class="form-control select2 province location"
+                                        data-target="districts">
                                         <option value="0">[Chọn Thành Phố]</option>
                                         @if (@isset($provinces))
-                                            @foreach ($provinces as $province)
-                                                <option value="{{ $province->code }}">{{ $province->name }}</option>
-                                            @endforeach
+                                        @foreach ($provinces as $province)
+                                        <option @if(old('province_id')==$province->code) selected @endif value="{{
+                                            $province->code }}">{{ $province->name }}</option>
+                                        @endforeach
                                         @endif
                                     </select>
                                 </div>
@@ -103,7 +125,8 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Quận/Huyện</label>
-                                    <select name="district_id   " id="" class="form-control districts select2" data-target="wards">
+                                    <select name="district_id" id="" class="form-control districts select2 location"
+                                        data-target="wards">
                                         <option value="0">[Chọn quận/Huyện]</option>
                                     </select>
                                 </div>
@@ -113,7 +136,7 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Phường/Xã</label>
-                                    <select name="ward_id" id="" class="form-control">
+                                    <select name="ward_id" id="" class="form-control wards select2">
                                         <option value="0">[Chọn Phường/Xã]</option>
                                     </select>
                                 </div>
@@ -121,7 +144,7 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Địa chỉ</label>
-                                    <input type="text" name="address" class="form-control"  value="" autocomplete="off">
+                                    <input type="text" name="address" class="form-control" value="" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -129,13 +152,14 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Điện thoại</label>
-                                    <input type="text" name="phone" class="form-control"  value="" autocomplete="off">
+                                    <input type="text" name="phone" class="form-control" value="" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ghi chú</label>
-                                    <input type="text" name="discipction" class="form-control"  value="" autocomplete="off">
+                                    <input type="text" name="discipction" class="form-control" value=""
+                                        autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -145,7 +169,13 @@
             </div>
         </div>
         <div class="text-right mb15">
-            <button class="btn btn-primary" type="submit" name= "send" value="send">Lưu lại</button>
+            <button class="btn btn-primary" type="submit" name="send" value="send">Lưu lại</button>
         </div>
     </div>
 </form>
+
+<script>
+    var province_id = '{{ old('province_id') }}'
+    var district_id = '{{ old('district_id') }}'
+    var ward_id = '{{ old('ward_id') }}'
+</script>

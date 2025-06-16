@@ -3,7 +3,6 @@
 namespace App\Http\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Models\District;
 use App\Repositories\DistrictRepository;
 use App\Repositories\ProvinceRepository;
 use Illuminate\Http\Request;
@@ -39,6 +38,8 @@ class LocationController extends Controller
         }
         return $html;
     }
+    
+    
 
 
 }

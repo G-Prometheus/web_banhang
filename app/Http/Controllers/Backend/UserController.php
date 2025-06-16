@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use Illuminate\Http\Request;
-use App\Services\Interfaces\UserServiceInterface as UserService;
+use App\Services\UserService;
 use App\Repositories\Interfaces\ProvinceRepositoryInterface as ProvinceService;
 
 class UserController extends Controller
@@ -49,5 +50,13 @@ class UserController extends Controller
         $template = 'backend.user.create';
         return view('backend.dashboard.layout', compact('template','config','provinces'));
     }
+    public function store(StoreUserRequest $request)
+    {
+        if($this->userService->create($request)){
+            return redirect()->route('user.index')->with('success', 'Thêm mới người dùng thành công');
+        }
+        return redirect()->back()->with('error', 'Thêm mới người dùng thất bại');
+    }
+    
 
 }

@@ -14,7 +14,7 @@ Route::get('/', function () {
 Route::get('user/index', [UserController::class, 'index'])->name('user.index') ->middleware('admin');
 Route::group(['prefix' => 'user'], function () {
     Route::get('create', [UserController::class, 'create'])->name('user.create')->middleware('admin');
-    // Route::post('store', [UserController::class, 'store'])->name('user.store')->middleware('admin');
+    Route::post('store', [UserController::class, 'store'])->name('user.store')->middleware('admin');
     // Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit')->middleware('admin');
     // Route::post('update/{id}', [UserController::class, 'update'])->name('user.update')->middleware('admin');
     // Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete')->middleware('admin');
