@@ -65,15 +65,15 @@
             })
         }
     }
-    HT.changeBackground = () => {
+    HT.changeBackground = (_this) => {
         let isChecked = _this.prop('checked')
         if (isChecked) {
             _this.closest('tr').addClass('active-bg')
-        }
-        else {
+        } else {
             _this.closest('tr').removeClass('active-bg')
         }
     }
+
     HT.allChecked = () => {
         let allChecked = $('.input-checkbox').length === $('.input-checkbox:checked').length
         $('#checkAll').prop('checked', allChecked)
