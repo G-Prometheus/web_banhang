@@ -1,14 +1,8 @@
 @include('backend.dashboard.component.breadcumb',['title' => $config['seo']['create']['title']])
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-<form action="{{ route('user.store') }}" method="post" class="box">
+
+
+<form action="{{ route('user.destroy',$user->id) }}" method="post" class="box">
+    @method('DELETE')
     @csrf
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -29,7 +23,7 @@
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Email <span
                                             class="text-danger">(*)</span></label>
-                                    <input type="text" name="email" class="form-control" value="{{ old('email') }}"
+                                    <input type="text" name="email" class="form-control" value="{{ old('email',($user->email) ?? '') }}"
                                         autocomplete="off">
                                 </div>
                             </div>
@@ -37,18 +31,27 @@
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Họ tên <span
                                             class="text-danger">(*)</span></label>
-                                    <input type="text" name="name" class="form-control" value="{{ old('name') }}"
+                                    <input type="text" name="name" class="form-control" value="{{ old('name',($user->name) ?? '') }}"
                                         autocomplete="off">
                                 </div>
                             </div>
                         </div>
+                        @php
+                            $userCatalogue = [
+                                '[Chọn nhóm thành viên]',
+                                'Quản trị viên',
+                                'Cộng tác viên',
+                            ]
+                        @endphp
                         <div class="row mb10">
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Nhóm thành viên <span
                                             class="text-danger">(*)</span></label>
                                     <select name="user_catalogue_id" id="" class="form-control">
-                                        <option value="0">[Chọn nhóm thành viên]</option>
+                                        @foreach ($userCatalogue as $key => $item)
+                                            <option {{ $key == old('user_catalogue_id',(isset($user->user_catalogue_id)) ? $user->user_catalogue_id : '' ) ? 'selected' : '' }} value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -56,33 +59,16 @@
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ngày sinh </label>
                                     <input type="date" name="birthday" class="form-control"
-                                        value="{{ old('birthday') }}" autocomplete="off">
+                                        value="{{ old('birthday',(isset($user->birthday)) ? date('Y-m-d', strtotime($user->birthday)) : '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb10">
-                            <div class="col-lg-6">
-                                <div class="form-row">
-                                    <label for="" class="control-label text-right">Mật khẩu<span
-                                            class="text-danger">(*)</span></label>
-                                    <input type="password" name="password" class="form-control"
-                                        value="{{ old('password') }}" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-row">
-                                    <label for="" class="control-label text-right">Nhập lại mật khẩu<span
-                                            class="text-danger">(*)</span></label>
-                                    <input type="password" name="re_password" class="form-control"
-                                        value="{{ old('re_password') }}" autocomplete="off">
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ảnh đại diện</label>
-                                    <input type="password" name="image" class="form-control" value="{{ old('image') }}"
+                                    <input type="text" name="image" class="form-control" value="{{ old('image',($user->image) ?? '') }}"
                                         autocomplete="off">
                                 </div>
                             </div>
@@ -144,7 +130,7 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Địa chỉ</label>
-                                    <input type="text" name="address" class="form-control" value="" autocomplete="off">
+                                    <input type="text" name="address" class="form-control" value="{{ old('address',($user->address) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -152,13 +138,13 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Điện thoại</label>
-                                    <input type="text" name="phone" class="form-control" value="" autocomplete="off">
+                                    <input type="text" name="phone" class="form-control" value="{{ old('phone',($user->phone) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ghi chú</label>
-                                    <input type="text" name="discipction" class="form-control" value=""
+                                    <input type="text" name="discipction" class="form-control" value="{{ old('discipction',($user->discipction) ?? '') }}"
                                         autocomplete="off">
                                 </div>
                             </div>
@@ -169,13 +155,13 @@
             </div>
         </div>
         <div class="text-right mb15">
-            <button class="btn btn-primary" type="submit" name="send" value="send">Lưu lại</button>
+            <button class="btn btn-primary" type="submit" name="send" value="send">Xoá</button>
         </div>
     </div>
 </form>
 
 <script>
-    var province_id = '{{ old('province_id') }}'
-    var district_id = '{{ old('district_id') }}'
-    var ward_id = '{{ old('ward_id') }}'
+    var province_id = '{{ (isset($user->province_id)) ? $user->province_id : old('province_id') }}'
+    var district_id = '{{ (isset($user->district_id)) ? $user->district_id : old('district_id') }}'
+    var ward_id = '{{ (isset($user->ward_id)) ? $user->ward_id : old('ward_id') }}'
 </script>

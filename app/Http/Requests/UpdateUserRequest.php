@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|string|email|unique:users|max:191',
+            'email' => 'required|string|email|unique:users,email,'.$this->id.'|max:191',
             'name' => 'required|string',
             'user_catalogue_id' => 'required|integer|gt:0',
-            'password' => 'required|string|min:6',
-            're_password' => 'required|string|same:password',
         ];
     }
     public function messages(): array
@@ -40,9 +38,6 @@ class StoreUserRequest extends FormRequest
             'name.require' => 'Bạn chưa nhập tên',
             'name.string' => 'Tên phải là chuỗi ký tự',
             'user_catalogue_id.gt' => 'Bạn chưa chọn nhóm người dùng',
-            'password.required' => 'Bạn chưa nhập mật khẩu',
-            're_password.required' => 'Bạn chưa nhập vào ô nhập lại mật khẩu',
-            're_password.same' => 'Mật khẩu không khớp',
         ];
     }
 }
