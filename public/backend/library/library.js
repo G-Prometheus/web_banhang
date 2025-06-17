@@ -17,12 +17,13 @@
         $(document).on('change', '.status', function (e) {
             let _this = $(this)
             let option = {
-                'data': {
-                    'modelId': _this.attr('data-modelId'),
-                    'model': _this.attr('data-model'),
-                    'field': _this.attr('data-field'),
-                    '_token': _token,
-                },
+
+                'value': _this.val(),
+                'modelId': _this.attr('data-modelId'),
+                'model': _this.attr('data-model'),
+                'field': _this.attr('data-field'),
+                '_token': _token,
+
             }
             $.ajax({
                 url: 'ajax/dashboard/changeStatus',
@@ -42,9 +43,47 @@
         })
 
     }
+    HT.checkAll = () => {
+        if ($('#checkAll').length) {
+            $(document).on('click', '#checkAll', function (e) {
+                let isChecked = $(this).prop('checked')
+                $('.input-checkbox').prop('checked', isChecked)
+                $('.input-checkbox').each(function () {
+                    let _this = $(this)
+                    HT.changeBackground(_this)
+                })
+
+                $('.input-checkbox').prop('checked', isChecked)
+            })
+        }
+    }
+    HT.InputCheckbox = () => {
+        if ($('.input-checkbox').length) {
+            $(document).on('click', '.input-checkbox', function (e) {
+                let _this = $(this)
+                HT.changeBackground(_this)
+            })
+        }
+    }
+    HT.changeBackground = () => {
+        let isChecked = _this.prop('checked')
+        if (isChecked) {
+            _this.closest('tr').addClass('active-bg')
+        }
+        else {
+            _this.closest('tr').removeClass('active-bg')
+        }
+    }
+    HT.allChecked = () => {
+        let allChecked = $('.input-checkbox').length === $('.input-checkbox:checked').length
+        $('#checkAll').prop('checked', allChecked)
+    }
     $(document).ready(function () {
         HT.switchery()
         HT.select2()
         HT.changeStatus()
+        HT.checkAll()
+        HT.InputCheckbox()
+        HT.allChecked()
     })
 })(jQuery)

@@ -70,3 +70,12 @@ h5{
     height: 32px !important;
     
 }
+.fl-wrapper {
+    position: fixed !important;
+    top: 70px !important; /* hoặc 20px tùy khoảng cách bạn muốn */
+    right: 20px;
+    z-index: 9999 !important;
+}
+.active-bg{
+    background: #ffc !important;
+}

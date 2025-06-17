@@ -17,11 +17,12 @@ class DashboardController extends Controller
     
     public function changeStatus(Request $request){
         $post = $request->input();
-        $serviceInstanceNamespace = '\App\Services\\' . ucfirst($post['service']) . 'Service';
+        $serviceInstanceNamespace = '\App\Services\\' . ucfirst($post['model']) . 'Service';
         if(class_exists($serviceInstanceNamespace)){
             $serviceInstance = app($serviceInstanceNamespace);
         }
-        $serviceInstance->updateStatus($post);
+        $flag = $serviceInstance->updateStatus($post);
+        return response()->json(['flag' => $flag]);
     }
     
     
