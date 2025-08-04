@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\User;
+use App\Repositories\Interfaces\UserCatalogueRepositoryInterface;
+
+class UserCatalogueRepository extends BaseRepository implements UserCatalogueRepositoryInterface
+{
+    /**
+     * Create a new class instance.
+     */
+    protected $model;
+    public function __construct(User $model)
+    {
+        $this->model = $model;
+    }
+    
+}

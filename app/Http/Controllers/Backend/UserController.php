@@ -35,7 +35,7 @@ class UserController extends Controller
             ]
         ];
         $config['seo'] = config('app.user');
-        $template = 'backend.user.index';
+        $template = 'backend.user.user.index';
         return view('backend.dashboard.layout', compact('template','config','users'));
     }
     public function create()
@@ -53,7 +53,7 @@ class UserController extends Controller
         ];
         $config['method'] = 'create';
          $config['seo'] = config('app.user');
-        $template = 'backend.user.upsert';
+        $template = 'backend.user.user.upsert';
         return view('backend.dashboard.layout', compact('template','config','provinces'));
     }
     public function store(StoreUserRequest $request)
@@ -93,14 +93,14 @@ class UserController extends Controller
         ];
         $config['method'] = 'edit';
          $config['seo'] = config('app.user');
-        $template = 'backend.user.upsert';
+        $template = 'backend.user.user.upsert';
         return view('backend.dashboard.layout', compact('template','config','provinces','user'));
     }
     public function delete($id)
     {
         $user = $this->userRepository->findById($id);
         $config['seo'] = config('app.user');
-        $template = 'backend.user.delete';
+        $template = 'backend.user.user.delete';
         return view('backend.dashboard.layout', compact('template','user','config'));
     }
 
