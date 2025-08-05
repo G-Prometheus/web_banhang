@@ -22,19 +22,17 @@ class UserCatalogueService implements UserCatalogueServiceInterface
     }
     public function paginate($request)
     {
+
         $condition['keyword'] = addslashes($request->input('keyword'));
         $perpage = $request->integer('perpage');
-        $users = $this->userCatalogueRepository->pagination(['id','email','phone','address','name','status'],$condition,[],['path'=>'user/index'],$perpage);   
-        return $users;
+        $userCatalogues = $this->userCatalogueRepository->pagination(['name','id','description'],$condition,[],['path'=>'user/catalogue/index'],$perpage,['users']);   
+        return $userCatalogues;
     }
     public function create($request)
     {
         DB::beginTransaction();
         try {
-            $payload = $request->except(['_token', 'send', 're_password']);
-            $payload['birthday'] = $this->converBirthdayDate($payload['birthday']);
-            $payload['password'] = Hash::make($payload['password']);
-
+            $payload = $request->except(['_token', 'send']);
             $user = $this->userCatalogueRepository->create($payload);
             DB::commit();
             return true;
@@ -49,7 +47,6 @@ class UserCatalogueService implements UserCatalogueServiceInterface
         DB::beginTransaction();
         try {
             $payload = $request->except(['_token', 'send']);
-            $payload['birthday'] = $this->converBirthdayDate($payload['birthday']);
             $user = $this->userCatalogueRepository->update($id, $payload);
             DB::commit();
             return true;

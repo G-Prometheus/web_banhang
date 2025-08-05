@@ -37,7 +37,7 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại',
             'email.string' => 'Email phải là chuỗi ký tự',
             'email.max' => 'Email dài tối đa 191 ký tự',
-            'name.require' => 'Bạn chưa nhập tên',
+            'name.required' => 'Bạn chưa nhập tên',
             'name.string' => 'Tên phải là chuỗi ký tự',
             'user_catalogue_id.gt' => 'Bạn chưa chọn nhóm người dùng',
             'password.required' => 'Bạn chưa nhập mật khẩu',

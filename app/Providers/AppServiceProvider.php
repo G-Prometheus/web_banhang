@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         foreach($this->serviceBindings as $key => $val) {
             $this->app->bind($key, $val);
         }
+        
     }
 
     /**

@@ -8,16 +8,19 @@ use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Repositories\Interfaces\ProvinceRepositoryInterface as ProvinceService;
+use App\Repositories\UserCatalogueRepository;
 use App\Repositories\UserRepository;
 class UserController extends Controller
 {
     protected $userService;
     protected $provinceRepository;
     protected $userRepository;
-    public function __construct(UserService $userService,ProvinceService $provinceRepository,UserRepository $userRepository) {
+    protected $userCatalogueRepository;
+    public function __construct(UserService $userService,ProvinceService $provinceRepository,UserRepository $userRepository,UserCatalogueRepository $userCatalogueRepository) {
         $this-> userService = $userService;
         $this->provinceRepository = $provinceRepository;
         $this->userRepository = $userRepository;
+        $this->userCatalogueRepository = $userCatalogueRepository;
     }
     public function index(Request $request)
     {
@@ -54,7 +57,8 @@ class UserController extends Controller
         $config['method'] = 'create';
          $config['seo'] = config('app.user');
         $template = 'backend.user.user.upsert';
-        return view('backend.dashboard.layout', compact('template','config','provinces'));
+        $userCatalogues = $this->userCatalogueRepository->getAll();
+        return view('backend.dashboard.layout', compact('template','config','provinces','userCatalogues'));
     }
     public function store(StoreUserRequest $request)
     {
@@ -81,6 +85,7 @@ class UserController extends Controller
     {
         $user = $this->userRepository->findById($id);
         $provinces = $this->provinceRepository->getAll();
+        $userCatalogues = $this->userCatalogueRepository->getAll();
         $config = [
             'js' => [
                 'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js',
@@ -94,7 +99,7 @@ class UserController extends Controller
         $config['method'] = 'edit';
          $config['seo'] = config('app.user');
         $template = 'backend.user.user.upsert';
-        return view('backend.dashboard.layout', compact('template','config','provinces','user'));
+        return view('backend.dashboard.layout', compact('template','config','provinces','user','userCatalogues'));
     }
     public function delete($id)
     {

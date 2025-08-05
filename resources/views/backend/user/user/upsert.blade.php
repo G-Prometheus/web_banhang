@@ -9,7 +9,7 @@
 </div>
 @endif
 @php
-    $url = ($config['method'] == 'create') ? route('user.store') : route('user.update', $user->id);
+$url = ($config['method'] == 'create') ? route('user.store') : route('user.update', $user->id);
 @endphp
 <form action="{{ $url }}" method="post" class="box">
     @csrf
@@ -32,43 +32,43 @@
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Email <span
                                             class="text-danger">(*)</span></label>
-                                    <input type="text" name="email" class="form-control" value="{{ old('email',($user->email) ?? '') }}"
-                                        autocomplete="off">
+                                    <input type="text" name="email" class="form-control"
+                                        value="{{ old('email',($user->email) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Họ tên <span
                                             class="text-danger">(*)</span></label>
-                                    <input type="text" name="name" class="form-control" value="{{ old('name',($user->name) ?? '') }}"
-                                        autocomplete="off">
+                                    <input type="text" name="name" class="form-control"
+                                        value="{{ old('name',($user->name) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
-                        @php
-                            $userCatalogue = [
-                                '[Chọn nhóm thành viên]',
-                                'Quản trị viên',
-                                'Cộng tác viên',
-                            ]
-                        @endphp
+
                         <div class="row mb10">
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Nhóm thành viên <span
                                             class="text-danger">(*)</span></label>
                                     <select name="user_catalogue_id" id="" class="form-control">
-                                        @foreach ($userCatalogue as $key => $item)
-                                            <option {{ $key == old('user_catalogue_id',(isset($user->user_catalogue_id)) ? $user->user_catalogue_id : '' ) ? 'selected' : '' }} value="{{ $key }}">{{ $item }}</option>
+                                        @foreach ($userCatalogues as $item)
+                                        <option value="{{ $item->id }}" {{ $item->id == old('user_catalogue_id',
+                                            $user->user_catalogue_id ?? '') ? 'selected' : '' }}
+                                            >
+                                            {{ $item->name }}
+                                        </option>
                                         @endforeach
                                     </select>
+
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ngày sinh </label>
                                     <input type="date" name="birthday" class="form-control"
-                                        value="{{ old('birthday',(isset($user->birthday)) ? date('Y-m-d', strtotime($user->birthday)) : '') }}" autocomplete="off">
+                                        value="{{ old('birthday',(isset($user->birthday)) ? date('Y-m-d', strtotime($user->birthday)) : '') }}"
+                                        autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -96,8 +96,8 @@
                             <div class="col-lg-12">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ảnh đại diện</label>
-                                    <input type="text" name="image" class="form-control" value="{{ old('image',($user->image) ?? '') }}"
-                                        autocomplete="off">
+                                    <input type="text" name="image" class="form-control"
+                                        value="{{ old('image',($user->image) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -158,7 +158,8 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Địa chỉ</label>
-                                    <input type="text" name="address" class="form-control" value="{{ old('address',($user->address) ?? '') }}" autocomplete="off">
+                                    <input type="text" name="address" class="form-control"
+                                        value="{{ old('address',($user->address) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>
@@ -166,14 +167,15 @@
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Điện thoại</label>
-                                    <input type="text" name="phone" class="form-control" value="{{ old('phone',($user->phone) ?? '') }}" autocomplete="off">
+                                    <input type="text" name="phone" class="form-control"
+                                        value="{{ old('phone',($user->phone) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-row">
                                     <label for="" class="control-label text-right">Ghi chú</label>
-                                    <input type="text" name="discipction" class="form-control" value="{{ old('discipction',($user->discipction) ?? '') }}"
-                                        autocomplete="off">
+                                    <input type="text" name="discipction" class="form-control"
+                                        value="{{ old('discipction',($user->discipction) ?? '') }}" autocomplete="off">
                                 </div>
                             </div>
                         </div>

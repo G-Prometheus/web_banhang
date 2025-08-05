@@ -59,4 +59,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function userCatalogue()
+    {
+        return $this->belongsTo(UserCatalogue::class, 'user_catalogue_id', 'id');
+    }
 }

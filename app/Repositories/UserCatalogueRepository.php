@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\User;
+
+use App\Models\UserCatalogue;
 use App\Repositories\Interfaces\UserCatalogueRepositoryInterface;
 
 class UserCatalogueRepository extends BaseRepository implements UserCatalogueRepositoryInterface
@@ -11,7 +12,7 @@ class UserCatalogueRepository extends BaseRepository implements UserCatalogueRep
      * Create a new class instance.
      */
     protected $model;
-    public function __construct(User $model)
+    public function __construct(UserCatalogue $model)
     {
         $this->model = $model;
     }

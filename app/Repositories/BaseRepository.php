@@ -44,7 +44,7 @@ class BaseRepository implements BaseRepositoryInterface
         array $join = [],
         array $extend = [],
         int $perPage = 1,
-        
+        array $relations = []
     ){
         $query = $this->model->select($columns)->where(function($query) use ($conditions){
             if(isset($conditions['keyword']) && !empty($conditions['keyword'])){
@@ -53,6 +53,12 @@ class BaseRepository implements BaseRepositoryInterface
                       ->orWhere('phone', 'LIKE','%'.$conditions['keyword'].'%');
             }
         });
+        //truy van so user cua catalogue
+        if(isset($relations) && !empty($relations)){
+            foreach($relations as $relation){
+                $query->withCount($relation);
+            }
+        }
         if(!empty($join)){
             $query->join(...$join);
         }
